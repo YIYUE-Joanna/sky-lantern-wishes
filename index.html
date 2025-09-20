@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Lantern Wishes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(180deg, #0a0a2e 0%, #16213e 40%, #1a237e 100%);
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Stars background */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #eee, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: sparkle 8s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Beach silhouette */
+        .beach {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 15%;
+            background: linear-gradient(180deg, transparent 0%, #1a1a1a 30%, #000 100%);
+            z-index: 2;
+        }
+
+        /* Ocean with gentle waves */
+        .ocean {
+            position: absolute;
+            bottom: 10%;
+            width: 100%;
+            height: 8%;
+            background: linear-gradient(180deg, rgba(30, 58, 138, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            top: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+            animation: wave 6s ease-in-out infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation-delay: -2s;
+            opacity: 0.7;
+        }
+
+        .wave:nth-child(3) {
+            animation-delay: -4s;
+            opacity: 0.4;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(-50%); }
+            50% { transform: translateX(-40%); }
+        }
+
+        /* Sky lantern - responsive sizing */
+        .lantern {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .lantern:hover {
+            transform: scale(1.2);
+            filter: brightness(1.3);
+        }
+
+        .lantern-body {
+            width: 40px;
+            height: 50px;
+            background: radial-gradient(ellipse at center, #ffeb3b 0%, #ff9800 40%, #f57c00 100%);
+            border-radius: 8px 8px 20px 20px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 235, 59, 0.8), inset 0 0 20px rgba(255, 152, 0, 0.5);
+            border: 2px solid #ffb74d;
+        }
+
+        .lantern-body::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 30px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
+            border-radius: 4px;
+        }
+
+        .lantern-top {
+            width: 30px;
+            height: 8px;
+            background: #8d6e63;
+            border-radius: 15px;
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .lantern-string {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 15px;
+            background: #8d6e63;
+        }
+
+        /* Floating animation */
+        .floating {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        /* Fireworks */
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: explode 2s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(20);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(40);
+            }
+        }
+
+        /* Language Selector - Mobile responsive */
+        .language-selector {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .language-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 11px;
+        }
+
+        .language-btn.active {
+            background: linear-gradient(45deg, #ff9800, #ffeb3b);
+            color: #1a237e;
+            font-weight: bold;
+        }
+
+        .language-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* UI Controls - Mobile responsive */
+        .controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: calc(100vw - 20px);
+            max-width: 300px;
+        }
+
+        .controls h2 {
+            color: #ffeb3b;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .wish-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ffb74d;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            margin-bottom: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        .wish-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .release-btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(45deg, #ff9800, #ffeb3b);
+            border: none;
+            border-radius: 6px;
+            color: #1a237e;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        .release-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        }
+
+        .release-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .lantern-count {
+            color: #ffeb3b;
+            text-align: center;
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
+        .clear-sky-btn {
+            width: 100%;
+            padding: 6px;
+            background: linear-gradient(45deg, #f44336, #ff5722);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+        }
+
+        .clear-sky-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+        }
+
+        /* Video Overlay - Mobile responsive */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 500;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .video-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 80vh;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(255, 235, 59, 0.3);
+            border: 2px solid rgba(255, 235, 59, 0.5);
+        }
+
+        .memory-video {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        .video-skip-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 11px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .video-skip-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .video-title {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: #ffeb3b;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Fade animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .fade-out {
+            animation: fadeOut 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.8); }
+        }
+
+        /* Wish display modal - Mobile responsive */
+        .wish-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            border: 2px solid #ffeb3b;
+            z-index: 200;
+            display: none;
+            max-width: 90vw;
+            max-height: 80vh;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 235, 59, 0.5);
+            overflow-y: auto;
+        }
+
+        .wish-modal h3 {
+            color: #ffeb3b;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .wish-content {
+            color: white;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 6px;
+            word-wrap: break-word;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .close-btn, .delete-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .close-btn {
+            background: linear-gradient(45deg, #ff9800, #ffeb3b);
+            color: #1a237e;
+        }
+
+        .delete-btn {
+            background: linear-gradient(45deg, #f44336, #ff5722);
+            color: white;
+        }
+
+        .close-btn:hover, .delete-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Instructions - Mobile responsive */
+        .instructions {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 12px;
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 10px;
+            max-width: 180px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.3;
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 768px) {
+            .lantern {
+                width: 35px;
+                height: 52px;
+            }
+            
+            .lantern-body {
+                width: 35px;
+                height: 42px;
+            }
+            
+            .controls {
+                max-width: calc(100vw - 20px);
+                left: 10px;
+                right: 10px;
+            }
+            
+            .language-selector {
+                top: 5px;
+                right: 5px;
+                padding: 6px 10px;
+            }
+            
+            .instructions {
+                bottom: 5px;
+                right: 5px;
+                max-width: 150px;
+                font-size: 9px;
+            }
+            
+            .wish-modal {
+                padding: 15px;
+                max-width: 95vw;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .controls h2 {
+                font-size: 1rem;
+            }
+            
+            .wish-input {
+                font-size: 13px;
+                padding: 8px;
+            }
+            
+            .release-btn {
+                font-size: 13px;
+                padding: 8px;
+            }
+            
+            .lantern-count {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    
+    <div class="beach"></div>
+
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <button class="language-btn active" onclick="setLanguage('en', this)">EN</button>
+        <button class="language-btn" onclick="setLanguage('zh', this)">中文</button>
+    </div>
+
+    <div class="controls">
+        <h2 data-en="🏮 Make a Wish" data-zh="🏮 许下愿望">🏮 Make a Wish</h2>
+        
+        <input type="text" class="wish-input" data-en-placeholder="Write your wish or idea here..." 
+               data-zh-placeholder="在这里写下你的愿望或想法..." placeholder="Write your wish or idea here..." maxlength="100">
+        <button class="release-btn" onclick="releaseLantern()" data-en="Release Lantern ✨" data-zh="放飞天灯 ✨">Release Lantern ✨</button>
+        <div class="lantern-count">
+            <span data-en="Lanterns in sky:" data-zh="天空中的天灯:">Lanterns in sky:</span> 
+            <span id="count">0</span>
+        </div>
+        <button class="clear-sky-btn" onclick="clearSky()" data-en="Clear Sky 🌟" data-zh="清空天空 🌟">Clear Sky 🌟</button>
+    </div>
+
+    <!-- Video Overlay -->
+    <div class="video-overlay" id="videoOverlay" onclick="handleOverlayClick(event)">
+        <div class="video-container">
+            <video class="memory-video" id="memoryVideo" muted>
+                <source src="sky laterns.mp4" type="video/mp4">
+                <span data-en="Your browser does not support video playback." data-zh="您的浏览器不支持视频播放。">Your browser does not support video playback.</span>
+            </video>
+            <button class="video-skip-btn" onclick="skipVideo()" data-en="Skip" data-zh="跳过">Skip</button>
+            <div class="video-title" data-en="Your Beautiful Memory ✨" data-zh="你的美好回忆 ✨">Your Beautiful Memory ✨</div>
+        </div>
+    </div>
+
+    <div class="wish-modal" id="wishModal" onclick="handleModalClick(event)">
+        <h3 data-en="🏮 Your Wish" data-zh="🏮 你的愿望">🏮 Your Wish</h3>
+        <div class="wish-content" id="wishContent"></div>
+        <div class="modal-buttons">
+            <button class="close-btn" onclick="closeWishModal()" data-en="Close" data-zh="关闭">Close</button>
+            <button class="delete-btn" onclick="deleteLantern()" data-en="Delete Lantern" data-zh="删除天灯">Delete Lantern</button>
+        </div>
+    </div>
+
+    <div class="instructions">
+        <div data-en="💡 Write a wish and click 'Release Lantern' to send it to the sky.<br>Click on floating lanterns to read the wishes inside!<br>🗑️ Click 'Delete Lantern' to remove individual lanterns<br>🎬 Your memory video will play with each lantern release! ✨<br><br>🌟 Your lanterns will be saved and visible to all visitors!"
+             data-zh="💡 写下愿望，点击"放飞天灯"将其送上天空。<br>点击漂浮的天灯阅读里面的愿望！<br>🗑️ 点击"删除天灯"移除单个天灯<br>🎬 每次放飞天灯时会播放你的回忆视频！✨<br><br>🌟 你的天灯会被保存并对所有访客可见！">
+            💡 Write a wish and click "Release Lantern" to send it to the sky.<br>
+            Click on floating lanterns to read the wishes inside!<br>
+            🗑️ Click "Delete Lantern" to remove individual lanterns<br>
+            🎬 Your memory video will play with each lantern release! ✨<br><br>
+            🌟 Your lanterns will be saved and visible to all visitors!
+        </div>
+    </div>
+
+    <script>
+        let lanternCount = 0;
+        let wishes = [];
+        let activeLanterns = [];
+        let currentLantern = null;
+        let currentLanguage = 'en';
+
+        // Storage key for GitHub Pages (using sessionStorage for demo - in real app would use database)
+        const STORAGE_KEY = 'skyLanternWishes_shared';
+
+        // Language translations
+        const translations = {
+            en: {
+                'instructions': '💡 Write a wish and click "Release Lantern" to send it to the sky.<br>Click on floating lanterns to read the wishes inside!<br>🗑️ Click "Delete Lantern" to remove individual lanterns<br>🎬 Your memory video will play with each lantern release! ✨<br><br>🌟 Your lanterns will be saved and visible to all visitors!',
+                'please_write_wish': 'Please write a wish before releasing your lantern! ✨',
+                'sky_already_clear': 'The sky is already clear! 🌟',
+                'confirm_clear_all': 'Are you sure you want to clear all lanterns from the sky? This will remove everyone\'s wishes and cannot be undone.',
+                'confirm_delete': 'Are you sure you want to delete this lantern?\n\n"{wish}"\n\nThis action cannot be undone.'
+            },
+            zh: {
+                'instructions': '💡 写下愿望，点击"放飞天灯"将其送上天空。<br>点击漂浮的天灯阅读里面的愿望！<br>🗑️ 点击"删除天灯"移除单个天灯<br>🎬 每次放飞天灯时会播放你的回忆视频！✨<br><br>🌟 你的天灯会被保存并对所有访客可见！',
+                'please_write_wish': '请在放飞天灯前写下愿望！✨',
+                'sky_already_clear': '天空已经很清澈了！🌟',
+                'confirm_clear_all': '你确定要清空天空中的所有天灯吗？这将移除所有人的愿望且无法撤销。',
+                'confirm_delete': '你确定要删除这个天灯吗？\n\n"{wish}"\n\n此操作无法撤销。'
+            }
+        };
+
+        // Save data to memory (simulating shared storage)
+        function saveData() {
+            const data = {
+                wishes: wishes,
+                timestamp: Date.now()
+            };
+            // Since we can't use localStorage, we'll store in a global variable
+            // In a real shared environment, this would use a database
+            window.sharedLanternData = data;
+        }
+
+        // Load data from memory
+        function loadData() {
+            try {
+                if (window.sharedLanternData) {
+                    const data = window.sharedLanternData;
+                    wishes = data.wishes || [];
+                    
+                    // Recreate lanterns from saved wishes
+                    wishes.forEach((wish, index) => {
+                        setTimeout(() => {
+                            createLanternFromData(wish, index);
+                        }, index * 500); // Stagger the creation
+                    });
+                    
+                    lanternCount = wishes.length;
+                    document.getElementById('count').textContent = lanternCount;
+                }
+            } catch (error) {
+                console.log('No saved data found, starting fresh');
+                wishes = [];
+                lanternCount = 0;
+            }
+        }
+
+        function setLanguage(lang, buttonElement) {
+            currentLanguage = lang;
+            
+            // Update active language button
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            buttonElement.classList.add('active');
+            
+            // Update all text elements
+            document.querySelectorAll('[data-en]').forEach(element => {
+                if (element.tagName === 'INPUT') {
+                    const placeholder = element.getAttribute(`data-${lang}-placeholder`);
+                    if (placeholder) {
+                        element.placeholder = placeholder;
+                    }
+                } else {
+                    const text = element.getAttribute(`data-${lang}`);
+                    if (text) {
+                        element.textContent = text;
+                    }
+                }
+            });
+            
+            // Update instruction content
+            const instructionsDiv = document.querySelector('.instructions div');
+            if (instructionsDiv) {
+                instructionsDiv.innerHTML = translations[lang].instructions;
+            }
+        }
+
+        function playMemoryVideo(callback) {
+            const overlay = document.getElementById('videoOverlay');
+            const video = document.getElementById('memoryVideo');
+            
+            // Show overlay with fade in
+            overlay.style.display = 'flex';
+            overlay.classList.add('fade-in');
+            
+            // Reset and play video
+            video.currentTime = 0;
+            
+            // Handle video load and play
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log('Video play failed (this is normal if no video file exists):', error);
+                    // If video fails to play, just proceed with callback after a short delay
+                    setTimeout(() => finishVideo(callback), 1000);
+                });
+            }
+            
+            // Store callback for when video ends or is skipped
+            video.onended = () => {
+                finishVideo(callback);
+            };
+            
+            // Store callback on video element for skip function
+            video.completeCallback = callback;
+        }
+
+        function skipVideo() {
+            const video = document.getElementById('memoryVideo');
+            if (video.completeCallback) {
+                finishVideo(video.completeCallback);
+            }
+        }
+
+        function finishVideo(callback) {
+            const overlay = document.getElementById('videoOverlay');
+            const video = document.getElementById('memoryVideo');
+            
+            // Pause and reset video
+            video.pause();
+            video.currentTime = 0;
+            video.onended = null;
+            video.completeCallback = null;
+            
+            // Fade out overlay
+            overlay.classList.remove('fade-in');
+            overlay.classList.add('fade-out');
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                overlay.classList.remove('fade-out');
+                if (callback) callback(); // Execute the callback (create lantern)
+            }, 500);
+        }
+
+        function generateLanternId() {
+            return 'lantern_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function clearSky() {
+            if (activeLanterns.length === 0) {
+                alert(translations[currentLanguage].sky_already_clear);
+                return;
+            }
+            
+            if (confirm(translations[currentLanguage].confirm_clear_all)) {
+                activeLanterns.forEach(lantern => {
+                    if (lantern.driftInterval) clearInterval(lantern.driftInterval);
+                    if (lantern.bobInterval) clearInterval(lantern.bobInterval);
+                    lantern.remove();
+                });
+                activeLanterns = [];
+                lanternCount = 0;
+                wishes = [];
+                document.getElementById('count').textContent = lanternCount;
+                saveData(); // Save the cleared state
+            }
+        }
+
+        function createFirework(x, y) {
+            const colors = ['#ff4444', '#44ff44', '#4444ff', '#ffff44', '#ff44ff', '#44ffff'];
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = x + 'px';
+            firework.style.top = y + 'px';
+            firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+            firework.style.boxShadow = `0 0 10px ${firework.style.background}`;
+            document.body.appendChild(firework);
+            
+            setTimeout(() => {
+                firework.remove();
+            }, 2000);
+        }
+
+        function createRandomFireworks() {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * (window.innerHeight * 0.6);
+            createFirework(x, y);
+            
+            setTimeout(createRandomFireworks, Math.random() * 3000 + 2000);
+        }
+
+        function createLantern(wish) {
+            const lantern = document.createElement('div');
+            const lanternId = generateLanternId();
+            lantern.className = 'lantern floating';
+            lantern.setAttribute('data-id', lanternId);
+            
+            // Random starting position at bottom of screen
+            const startX = Math.random() * (window.innerWidth - 50);
+            lantern.style.left = startX + 'px';
+            lantern.style.bottom = '-80px';
+            
+            lantern.innerHTML = `
+                <div class="lantern-string"></div>
+                <div class="lantern-top"></div>
+                <div class="lantern-body"></div>
+            `;
+            
+            lantern.setAttribute('data-wish', wish);
+            
+            lantern.addEventListener('click', function() {
+                showWish(wish, lantern);
+            });
+            
+            document.body.appendChild(lantern);
+            activeLanterns.push(lantern);
+            
+            // Animate upward to final position
+            let currentBottom = -80;
+            const finalPosition = Math.random() * (window.innerHeight * 0.6) + window.innerHeight * 0.2;
+            const riseInterval = setInterval(() => {
+                currentBottom += 2;
+                lantern.style.bottom = currentBottom + 'px';
+                
+                if (currentBottom >= finalPosition) {
+                    clearInterval(riseInterval);
+                    startFloatingInPlace(lantern);
+                }
+            }, 50);
+        }
+
+        function createLanternFromData(wish, index) {
+            const lantern = document.createElement('div');
+            const lanternId = generateLanternId();
+            lantern.className = 'lantern floating';
+            lantern.setAttribute('data-id', lanternId);
+            
+            // Position based on index for saved lanterns
+            const x = (index * 100 + Math.random() * 50) % (window.innerWidth - 50);
+            const y = Math.random() * (window.innerHeight * 0.6) + window.innerHeight * 0.2;
+            
+            lantern.style.left = x + 'px';
+            lantern.style.bottom = y + 'px';
+            
+            lantern.innerHTML = `
+                <div class="lantern-string"></div>
+                <div class="lantern-top"></div>
+                <div class="lantern-body"></div>
+            `;
+            
+            lantern.setAttribute('data-wish', wish);
+            
+            lantern.addEventListener('click', function() {
+                showWish(wish, lantern);
+            });
+            
+            document.body.appendChild(lantern);
+            activeLanterns.push(lantern);
+            
+            // Start floating immediately for loaded lanterns
+            startFloatingInPlace(lantern);
+        }
+
+        function startFloatingInPlace(lantern) {
+            const initialX = parseFloat(lantern.style.left);
+            const driftDistance = 30 + Math.random() * 40;
+            
+            let direction = 1;
+            const driftInterval = setInterval(() => {
+                const currentX = parseFloat(lantern.style.left);
+                const newX = currentX + (direction * 0.5);
+                
+                if (Math.abs(newX - initialX) > driftDistance) {
+                    direction *= -1;
+                }
+                
+                if (newX > 0 && newX < window.innerWidth - 50) {
+                    lantern.style.left = newX + 'px';
+                }
+            }, 100);
+            
+            lantern.driftInterval = driftInterval;
+            
+            let bobDirection = 1;
+            const initialBottom = parseFloat(lantern.style.bottom);
+            const bobInterval = setInterval(() => {
+                const currentBottom = parseFloat(lantern.style.bottom);
+                const newBottom = currentBottom + (bobDirection * 0.3);
+                
+                if (Math.abs(newBottom - initialBottom) > 15) {
+                    bobDirection *= -1;
+                }
+                
+                lantern.style.bottom = newBottom + 'px';
+            }, 150);
+            
+            lantern.bobInterval = bobInterval;
+        }
+
+        function showWish(wish, lantern) {
+            currentLantern = lantern;
+            document.getElementById('wishContent').textContent = wish;
+            document.getElementById('wishModal').style.display = 'block';
+        }
+
+        function closeWishModal() {
+            currentLantern = null;
+            document.getElementById('wishModal').style.display = 'none';
+        }
+
+        function deleteLantern() {
+            if (!currentLantern) return;
+            
+            const wish = currentLantern.getAttribute('data-wish');
+            const confirmMessage = translations[currentLanguage].confirm_delete.replace('{wish}', wish);
+            
+            if (confirm(confirmMessage)) {
+                if (currentLantern.driftInterval) clearInterval(currentLantern.driftInterval);
+                if (currentLantern.bobInterval) clearInterval(currentLantern.bobInterval);
+                
+                const index = activeLanterns.indexOf(currentLantern);
+                if (index > -1) {
+                    activeLanterns.splice(index, 1);
+                }
+                
+                const wishIndex = wishes.indexOf(wish);
+                if (wishIndex > -1) {
+                    wishes.splice(wishIndex, 1);
+                }
+                
+                currentLantern.remove();
+                lanternCount--;
+                document.getElementById('count').textContent = lanternCount;
+                saveData(); // Save the updated state
+                closeWishModal();
+            }
+        }
+
+        function releaseLantern() {
+            const wishInput = document.querySelector('.wish-input');
+            const wish = wishInput.value.trim();
+            
+            if (wish === '') {
+                alert(translations[currentLanguage].please_write_wish);
+                return;
+            }
+            
+            // Disable button during video
+            const btn = document.querySelector('.release-btn');
+            btn.disabled = true;
+            
+            // Create firework at release button
+            const rect = btn.getBoundingClientRect();
+            createFirework(rect.left + rect.width/2, rect.top + rect.height/2);
+            
+            // Play memory video, then create lantern
+            playMemoryVideo(() => {
+                createLantern(wish);
+                wishes.push(wish);
+                
+                lanternCount++;
+                document.getElementById('count').textContent = lanternCount;
+                
+                wishInput.value = '';
+                
+                // Save the new wish
+                saveData();
+                
+                // Re-enable button
+                btn.disabled = false;
+                
+                // Visual feedback
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    btn.style.transform = 'scale(1)';
+                }, 100);
+            });
+        }
+
+        function handleOverlayClick(event) {
+            if (event.target === document.getElementById('videoOverlay')) {
+                skipVideo();
+            }
+        }
+
+        function handleModalClick(event) {
+            if (event.target === document.getElementById('wishModal')) {
+                closeWishModal();
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            const releaseBtn = document.querySelector('.release-btn');
+            if (releaseBtn) {
+                releaseBtn.addEventListener('click', releaseLantern);
+            }
+            
+            const wishInput = document.querySelector('.wish-input');
+            if (wishInput) {
+                wishInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !document.querySelector('.release-btn').disabled) {
+                        releaseLantern();
+                    }
+                });
+            }
+            
+            // Initialize language
+            setLanguage('en', document.querySelector('.language-btn.active'));
+            
+            // Load saved data
+            loadData();
+        });
+
+        // Start random fireworks
+        setTimeout(createRandomFireworks, 2000);
+    </script>
+</body>
+</html>
